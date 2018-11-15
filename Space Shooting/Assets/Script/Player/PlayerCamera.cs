@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour {
 
@@ -18,8 +16,9 @@ public class PlayerCamera : MonoBehaviour {
     void Update()
     {
         Vector3 targetdistance = Target.position + offset;
+        targetdistance.x = Mathf.Clamp(targetdistance.x, -2.5f, 2.5f);
+        targetdistance.y = Mathf.Clamp(targetdistance.y, -10, 20);
         transform.position = Vector3.Lerp(transform.position, targetdistance, smoothing * Time.deltaTime);
-
-        Mathf.Clamp(transform.position.x, -2.5f, 2.5f);
+        
     }
 }

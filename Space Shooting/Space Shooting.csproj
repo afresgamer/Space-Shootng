@@ -312,13 +312,23 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Script\Background\BackgroundScroll.cs" />
     <Compile Include="Assets\Script\Bullet\BulletBase.cs" />
+    <Compile Include="Assets\Script\Bullet\EnemyBullet.cs" />
+    <Compile Include="Assets\Script\Bullet\Meteorite.cs" />
     <Compile Include="Assets\Script\Bullet\PlayerBullet.cs" />
-    <Compile Include="Assets\Script\Manager\PoolController.cs" />
+    <Compile Include="Assets\Script\Effect\ExplosionController.cs" />
+    <Compile Include="Assets\Script\Enemy\EasyEnemy.cs" />
+    <Compile Include="Assets\Script\Enemy\EnemyBase.cs" />
+    <Compile Include="Assets\Script\Enemy\EnemyShot.cs" />
+    <Compile Include="Assets\Script\Manager\GameController.cs" />
     <Compile Include="Assets\Script\Manager\SingletonMonoBehaviour.cs" />
     <Compile Include="Assets\Script\ObjectPool\ObjectPool.cs" />
+    <Compile Include="Assets\Script\ObjectPool\PoolController.cs" />
+    <Compile Include="Assets\Script\ObstableController.cs" />
     <Compile Include="Assets\Script\Platform\TouchUtil.cs" />
     <Compile Include="Assets\Script\Player\PlayerCamera.cs" />
     <Compile Include="Assets\Script\Player\PlayerMovement.cs" />
+    <Compile Include="Assets\Script\Player\PlayerStatus.cs" />
+    <Compile Include="Assets\Script\UI\ScoreController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
