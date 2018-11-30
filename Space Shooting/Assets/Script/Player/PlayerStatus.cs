@@ -1,27 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UniRx;
 
 public class PlayerStatus : SingletonMonoBehaviour<PlayerStatus> {
-    
-    private float playerHp = 10;
-    public float PlayerHp
-    {
-        get { return playerHp; }
-        set {
-            if (!IsDamage)
-            {
-                playerHp = value;
-                if (playerHp < 0) { playerHp = 0; }
-            }
-        }
-    }
 
-    private int score = 0;
-    public int Score {
-        get { return score; }
-        set { score = value; }
-    }
+    //プレイヤーHPのReactiveProperty(値の変更を通知してくれる変数)
+    public ReactiveProperty<float> PlayerHp { get; set; }
+    //スコアのReactiveProperty(値の変更を通知してくれる変数)
+    public ReactiveProperty<int> Score { get; set; }
     
     /// <summary>
     /// ダメージフラグ
@@ -47,16 +34,20 @@ public class PlayerStatus : SingletonMonoBehaviour<PlayerStatus> {
         IsDamage = false;
     }
 
-    public void ChangeScene()
+    public void ChangeScene(int num)
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(num);
         Init();
+        GameController.Instance.InitGameStateProperty();
     }
 
+    /// <summary>
+    /// パラメータ初期化
+    /// </summary>
     public void Init()
     {
-        playerHp = 10;
-        score = 0;
+        PlayerHp = new ReactiveProperty<float>(10.0f);
+        Score = new ReactiveProperty<int>(0);
     }
 
 }

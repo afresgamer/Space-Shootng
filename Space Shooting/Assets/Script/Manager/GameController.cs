@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using UniRx;
 
 public class GameController : SingletonMonoBehaviour<GameController> {
 
@@ -8,31 +8,44 @@ public class GameController : SingletonMonoBehaviour<GameController> {
 	public enum GameDifficulty { Easy = 1 , Normal , Hard }
     private GameDifficulty gameDifficulty = GameDifficulty.Easy;
     public GameDifficulty GetGameDifficulty { get { return gameDifficulty; } }
-    
-    [HideInInspector]
-    public int GameState = 1;
+
+    //ゲームステージ表示のReactiveProperty(値の変更を通知してくれる変数)
+    public ReactiveProperty<int> GameStateProperty { get; set; }
     //最大ステージ数
     const int MaxGameState = 5;
 
     /// <summary>
-    /// ステート数を上昇条件
+    /// パラメータ初期化
     /// </summary>
-    /// <returns></returns>
-    public bool IsState()
+    public void InitGameStateProperty()
     {
-        if (PlayerStatus.Instance.Score % 100 == 0) return true;
+        GameStateProperty = new ReactiveProperty<int>(0);
+    }
+
+    /// <summary>
+    /// ステージ表示の判定処理
+    /// </summary>
+    /// <param name="score"></param>
+    /// <returns></returns>
+    public bool IsNextState(int score)
+    {
+        if (score > 0)
+        {
+            if(score % 100  == 0) return true;
+        }
         return false;
     }
 
     /// <summary>
     /// 次のステート数を返す
     /// </summary>
-    /// <param name="gameState"></param>
+    /// <param name="reactiveProperty"></param>
     /// <returns></returns>
-    public int SetGameState(int gameState)
+    public int SetGameState(ReactiveProperty<int> reactiveProperty)
     {
-        if(MaxGameState >= gameState) { return MaxGameState; }
-        return gameState + 1;
+        if (MaxGameState <= reactiveProperty.Value) { return MaxGameState; }
+        else { reactiveProperty.Value += 1; }
+        return reactiveProperty.Value;
     }
 
     /// <summary>

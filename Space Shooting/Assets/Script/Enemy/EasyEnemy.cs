@@ -14,4 +14,9 @@ public class EasyEnemy : EnemyBase {
         base.Move();
     }
 
+    public override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+    }
+
 }

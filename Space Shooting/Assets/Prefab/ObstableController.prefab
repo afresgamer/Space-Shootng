@@ -19,41 +19,27 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4225024126731092}
-  - component: {fileID: 114162080429079234}
   - component: {fileID: 114939051404998848}
   m_Layer: 0
   m_Name: ObstableController
   m_TagString: Untagged
-  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4225024126731092
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1121030881698836}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114162080429079234
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1121030881698836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69cdbd91809fad541bd62ba85d2f33fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obj: {fileID: 1769437958569010, guid: 1522f80f5520a344db0950bfdc85fe79, type: 2}
-  MaxCount: 10
 --- !u!114 &114939051404998848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -65,5 +51,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe4b7e6e96537de4b9b98e73846b2192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxCreateTime: 2
-  poolController: {fileID: 114162080429079234}
+  poolController: {fileID: 0}

@@ -12,8 +12,6 @@ public class PlayerMovement : MonoBehaviour {
     private PoolController effectController;
     [SerializeField,Header("ゲームオーバー画面")]
     ScoreController scoreController;
-    
-    bool isMove = true;
 
     private void Awake()
     {
@@ -31,14 +29,14 @@ public class PlayerMovement : MonoBehaviour {
         //移動処理
         TouchInfo touchInfo = TouchUtil.GetTouch();
 
-        if (touchInfo == TouchInfo.Began && isMove) { Move();}
+        if (touchInfo == TouchInfo.Began && !PlayerStatus.Instance.IsDamage) { Move();}
 
         //弾丸処理
         if (poolController.IsCreate())
         { poolController.CreateObj(poolController.AttachPoint.position, poolController.AttachPoint.rotation); }
 
         //死亡処理
-        if (PlayerStatus.Instance.PlayerHp == 0.0f) { Death(); }
+        if (PlayerStatus.Instance.PlayerHp.Value <= 0.0f) { Death(); }
     }
 
     public void Move()

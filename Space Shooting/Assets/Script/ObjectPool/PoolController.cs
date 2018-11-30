@@ -11,7 +11,7 @@ public class PoolController : MonoBehaviour {
 
     private ObjectPool objectPool;
 
-    private void Start()
+    private void Awake()
     {
         if(attachPoint != null)
         {
@@ -28,7 +28,6 @@ public class PoolController : MonoBehaviour {
     public bool IsCreate()
     {
         if (Input.GetKeyDown(KeyCode.Space)) return true;
-
         return false;
     }
 
@@ -46,5 +45,10 @@ public class PoolController : MonoBehaviour {
     public void CreateObj(Vector3 pos ,Quaternion rot)
     {
         objectPool.GetPool(pos,rot);
+    }
+
+    public GameObject GetPoolObj(Vector3 pos, Quaternion quaternion)
+    {
+        return objectPool.GetPool(pos, quaternion);
     }
 }

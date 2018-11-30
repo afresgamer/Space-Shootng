@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyShot : MonoBehaviour {
@@ -25,21 +24,21 @@ public class EnemyShot : MonoBehaviour {
         poolController.SetCreate();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-            isShot = true;
-            transform.parent.LookAt(collision.gameObject.transform);
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if(collision.gameObject.tag == "Player")
+    //    {
+    //        isShot = true;
+    //        transform.parent.LookAt(collision.gameObject.transform);
+    //    }
+    //}
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            isShot = false;
-            transform.parent.rotation = Quaternion.Euler(0, 0, 0);
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Player")
+    //    {
+    //        isShot = false;
+    //        transform.parent.rotation = Quaternion.Euler(0, 0, 0);
+    //    }
+    //}
 }

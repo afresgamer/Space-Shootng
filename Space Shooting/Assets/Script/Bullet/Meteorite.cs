@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 
 public class Meteorite : BulletBase {
 
@@ -7,9 +8,8 @@ public class Meteorite : BulletBase {
 
     public override void Update()
     {
-        base.ShotMove();
-        transform.Rotate(0, 0, RSpeed * Random.value);
-        if (transform.position.y < -25)
+        transform.DORotateQuaternion(transform.rotation * Quaternion.AngleAxis(45.0f, transform.forward), RSpeed).SetLoops(-1);
+        if (transform.position.y < -20)
         {
             gameObject.SetActive(false);
         }
@@ -20,7 +20,7 @@ public class Meteorite : BulletBase {
         if(collision.tag == "Player")
         {
             gameObject.SetActive(false);
-            PlayerStatus.Instance.PlayerHp -= 2;
+            PlayerStatus.Instance.PlayerHp.Value -= 1;
             PlayerStatus.Instance.Damage(collision.gameObject);
         }
     }

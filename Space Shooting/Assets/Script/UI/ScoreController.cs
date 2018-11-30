@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UniRx;
 
 public class ScoreController : MonoBehaviour {
 
@@ -12,38 +13,50 @@ public class ScoreController : MonoBehaviour {
     [Header("ゲームオーバー画面")]
     public Image GameOverObj;
     [SerializeField, Header("ステージ数")]
-    private Text StateText;
+    private Text StageText;
+    
 
     private void Start()
     {
-        scoreText.text += PlayerStatus.Instance.Score.ToString();
-        GameOverObj.gameObject.SetActive(false);
-        StateText.text += GameController.Instance.GameState;
-        StartCoroutine(StateAnimCoroutine());
-    }
+        //各種パラメータの初期化
+        PlayerStatus.Instance.Init();
+        GameController.Instance.InitGameStateProperty();
 
-    private void Update()
-    {
-        scoreText.text = "Score:" + PlayerStatus.Instance.Score.ToString();
-        HpSlider.value = PlayerStatus.Instance.PlayerHp * 0.1f;
-        //goto 後は一定スコアごとにステージ数と出現する敵を増やす(最終ステージはボス戦)
+        GameOverObj.gameObject.SetActive(false);
+        StageText.text += GameController.Instance.SetGameState(GameController.Instance.GameStateProperty).ToString();
+        StartCoroutine(StateAnimCoroutine());
+
+        //各種パラメータ更新処理
+        PlayerStatus.Instance.PlayerHp.AsObservable().Subscribe(hp =>
+        {
+            //HPバーの表示処理
+            HpSlider.value = PlayerStatus.Instance.PlayerHp.Value * 0.1f;
+        });
+
+        PlayerStatus.Instance.Score.AsObservable().Subscribe(score =>
+        {
+            //スコアの表示処理
+            scoreText.text = "Score: " + PlayerStatus.Instance.Score.Value.ToString();
+            //ステージ表示処理
+            if (GameController.Instance.IsNextState(PlayerStatus.Instance.Score.Value)) AnimStateMovement();
+        });
     }
     
     public void AnimStateMovement()
     {
-        StateText.text = "State " + GameController.Instance.SetGameState(GameController.Instance.GameState);
+        StageText.text = "Stage " + GameController.Instance.SetGameState(GameController.Instance.GameStateProperty).ToString();
         StartCoroutine(StateAnimCoroutine());
     }
 
     IEnumerator StateAnimCoroutine()
     {
-        StateText.rectTransform.DOAnchorPosY(0, 1.0f);
+        StageText.rectTransform.DOAnchorPosY(0, 1.0f);
         yield return new WaitForSeconds(2.0f);
-        StateText.rectTransform.DOAnchorPosY(-450, 1.0f);
+        StageText.rectTransform.DOAnchorPosY(-450, 1.0f);
         yield return new WaitForSeconds(1.0f);
-        StateText.gameObject.SetActive(false);
-        StateText.rectTransform.DOAnchorPosY(450, 1.0f);
+        StageText.gameObject.SetActive(false);
+        StageText.rectTransform.DOAnchorPosY(450, 1.0f);
         yield return new WaitForSeconds(2.0f);
-        StateText.gameObject.SetActive(true);
+        StageText.gameObject.SetActive(true);
     }
 }

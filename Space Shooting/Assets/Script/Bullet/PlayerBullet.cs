@@ -11,7 +11,10 @@ public class PlayerBullet : BulletBase {
 
     public override void Update()
     {
-        base.Update();
+        if (transform.position.y > Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).y)
+        {
+            gameObject.SetActive(false);
+        }
         base.ShotMove();
     }
 
@@ -21,8 +24,22 @@ public class PlayerBullet : BulletBase {
         {
             collision.gameObject.SetActive(false);
             gameObject.SetActive(false);
-            PlayerStatus.Instance.Score += 10;
+            PlayerStatus.Instance.Score.Value += 10;
             poolEffect.CreateObj(collision.transform.position, Quaternion.identity);
+        }
+        else if(collision.tag == "Enemy")
+        {
+            collision.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+            PlayerStatus.Instance.Score.Value += 20;
+            poolEffect.CreateObj(collision.transform.position, Quaternion.identity);
+        }
+        else if(collision.tag == "Boss")
+        {
+            gameObject.SetActive(false);
+            PlayerStatus.Instance.Damage(collision.gameObject);
+            PlayerStatus.Instance.Score.Value += 30;
+            collision.GetComponent<BossEnemy>().BossLife.Value--;
         }
     }
 }
