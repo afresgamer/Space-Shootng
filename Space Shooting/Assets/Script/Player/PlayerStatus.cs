@@ -41,6 +41,13 @@ public class PlayerStatus : SingletonMonoBehaviour<PlayerStatus> {
         GameController.Instance.InitGameStateProperty();
     }
 
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene(1);
+        GameController.Instance.InitGameStateProperty();
+        
+    }
+
     /// <summary>
     /// パラメータ初期化
     /// </summary>

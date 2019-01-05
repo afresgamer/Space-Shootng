@@ -11,6 +11,8 @@ public class BossEnemy : EnemyBase {
     public Image GameClearImage;
     [Header("ボスライフUI")]
     public Slider BossLifeSlider;
+    [Header("ショットButton")]
+    public Button ShotButton;
 
     public override void Start()
     {
@@ -27,6 +29,8 @@ public class BossEnemy : EnemyBase {
             //ボス討伐後ゲームクリア処理
             GameClearImage.rectTransform.DOAnchorPosY(0, 1.0f);
             gameObject.SetActive(false);
+            ShotButton.interactable = false;
+            SoundController.Instance.FadePlayBGM(0.5f, 3);
             //全発射するオブジェクトを停止する
             foreach(var ObstableCon in FindObjectsOfType<ObstableController>())
             {

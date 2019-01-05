@@ -4,7 +4,7 @@ using UniRx;
 public class EnemyController : MonoBehaviour {
 
     [Header("敵出現タイプ")]
-    public PoolController[] poolControllers;
+    public ObstableController[] poolControllers;
     [Header("ボスタイプ")]
     public BossEnemy bossEnemy;
 
@@ -14,19 +14,23 @@ public class EnemyController : MonoBehaviour {
         GameController.Instance.GameStateProperty.AsObservable().Subscribe(gameState =>
         {
             //難易度を上げていくごとに敵の強さ変更処理
-            if(gameState <= poolControllers.Length)
+            if(GameController.Instance.GameStateProperty.Value < poolControllers.Length)
             {
-                poolControllers[gameState - 1].enabled = true;
-                if(gameState - 2 >= 0) { poolControllers[gameState - 2].enabled = false; }
+                poolControllers[gameState - 1].gameObject.SetActive(true);
+                if(gameState - 1 > 0) { poolControllers[gameState - 2].gameObject.SetActive(false); }
             }
             //ボス出現処理
-            if(GameController.Instance.GameStateProperty.Value == 5)
+            else if(GameController.Instance.GameStateProperty.Value >= 5)
             {
+                foreach(var poolCon in poolControllers)
+                {
+                    poolCon.gameObject.SetActive(false);
+                }
                 bossEnemy.gameObject.SetActive(true);
-                bossEnemy.BossLifeSlider.gameObject.SetActive(true);
+                bossEnemy.BossLifeSlider.transform.parent.gameObject.SetActive(true);
+                SoundController.Instance.FadePlayBGM(0.5f, 2);
             }
-
-            Debug.Log(GameController.Instance.GameStateProperty.Value);
+            
         });
 	}
 }

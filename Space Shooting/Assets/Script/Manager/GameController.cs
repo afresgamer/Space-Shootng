@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using UnityEngine;
+using UniRx;
 
 public class GameController : SingletonMonoBehaviour<GameController> {
 
@@ -8,6 +9,9 @@ public class GameController : SingletonMonoBehaviour<GameController> {
 	public enum GameDifficulty { Easy = 1 , Normal , Hard }
     private GameDifficulty gameDifficulty = GameDifficulty.Easy;
     public GameDifficulty GetGameDifficulty { get { return gameDifficulty; } }
+
+    [Header("ステージ移動クリア得点")]
+    public int ClearScoreValue = 100;
 
     //ゲームステージ表示のReactiveProperty(値の変更を通知してくれる変数)
     public ReactiveProperty<int> GameStateProperty { get; set; }
@@ -29,10 +33,7 @@ public class GameController : SingletonMonoBehaviour<GameController> {
     /// <returns></returns>
     public bool IsNextState(int score)
     {
-        if (score > 0)
-        {
-            if(score % 100  == 0) return true;
-        }
+        if (score > 0){ if(score >= ClearScoreValue * GameStateProperty.Value) return true; }
         return false;
     }
 

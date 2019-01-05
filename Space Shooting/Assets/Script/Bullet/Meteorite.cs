@@ -3,12 +3,18 @@ using DG.Tweening;
 
 public class Meteorite : BulletBase {
 
+    Rigidbody2D rb2d;
     [SerializeField, Header("回転スピード")]
     private float RSpeed = 1.0f;
 
+    public override void Start()
+    {
+        rb2d = GetComponent<Rigidbody2D>();
+    }
+
     public override void Update()
     {
-        transform.DORotateQuaternion(transform.rotation * Quaternion.AngleAxis(45.0f, transform.forward), RSpeed).SetLoops(-1);
+        rb2d.AddTorque(RSpeed);
         if (transform.position.y < -20)
         {
             gameObject.SetActive(false);

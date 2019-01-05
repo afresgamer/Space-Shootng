@@ -21,10 +21,10 @@ public class ScoreController : MonoBehaviour {
         //各種パラメータの初期化
         PlayerStatus.Instance.Init();
         GameController.Instance.InitGameStateProperty();
+        SoundController.Instance.Init();
+        SoundController.Instance.PlayBGM();
 
         GameOverObj.gameObject.SetActive(false);
-        StageText.text += GameController.Instance.SetGameState(GameController.Instance.GameStateProperty).ToString();
-        StartCoroutine(StateAnimCoroutine());
 
         //各種パラメータ更新処理
         PlayerStatus.Instance.PlayerHp.AsObservable().Subscribe(hp =>

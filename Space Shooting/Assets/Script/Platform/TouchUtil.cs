@@ -58,6 +58,21 @@ public class TouchUtil : MonoBehaviour {
         return camera.ScreenToWorldPoint(GetTouchPosition());
     }
 
+    /// <summary>
+    /// UI選択中か判定関数
+    /// </summary>
+    /// <returns></returns>
+    public static bool IsGetTouch()
+    {
+        //UI選択中か判定
+#if UNITY_ANDROID
+        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) { return true; }
+        return false;
+#elif UNITY_EDITOR
+        if(UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()){ return true; }
+        return false;
+#endif
+    }
 }
 
 /// <summary>

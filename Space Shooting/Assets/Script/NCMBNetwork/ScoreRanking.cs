@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace NCMB
+﻿namespace NCMB
 {
     public class ScoreRanking
     {
@@ -17,7 +13,7 @@ namespace NCMB
 
         public string GetRanking()
         {
-            return "  " + _name + "  " + _score.ToString();
+            return "    " + _name + "       " + _score.ToString();
         }
     }
 

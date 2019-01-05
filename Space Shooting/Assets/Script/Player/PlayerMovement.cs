@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -9,9 +10,12 @@ public class PlayerMovement : MonoBehaviour {
     public PoolController poolController;
     Sequence seq;
     Rigidbody2D rb2d;
+    AudioSource PlayerSE;
     private PoolController effectController;
     [SerializeField,Header("ゲームオーバー画面")]
     ScoreController scoreController;
+    [Header("ショットButton")]
+    public Button ShotButton;
 
     private void Awake()
     {
@@ -22,6 +26,7 @@ public class PlayerMovement : MonoBehaviour {
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        PlayerSE = GetComponent<AudioSource>();
         effectController = GameObject.FindGameObjectWithTag("Controller").GetComponent<PoolController>();
     }
 
@@ -33,7 +38,10 @@ public class PlayerMovement : MonoBehaviour {
 
         //弾丸処理
         if (poolController.IsCreate())
-        { poolController.CreateObj(poolController.AttachPoint.position, poolController.AttachPoint.rotation); }
+        {
+            poolController.CreateObj(poolController.AttachPoint.position, poolController.AttachPoint.rotation);
+            SoundController.Instance.PlaySE(PlayerSE, 2, false);
+        }
 
         //死亡処理
         if (PlayerStatus.Instance.PlayerHp.Value <= 0.0f) { Death(); }
@@ -41,11 +49,13 @@ public class PlayerMovement : MonoBehaviour {
 
     public void Move()
     {
+        //UI選択中は動かさない
+        if (TouchUtil.IsGetTouch()) return;
+
         seq = DOTween.Sequence();
         Vector3 move = TouchUtil.GetTouchWorldPosition(Camera.main) - Camera.main.transform.position;
         //移動制限
         move.x = Mathf.Clamp(move.x, -5.5f, 5.5f);
-        //move.y = Mathf.Clamp(move.y, -10f, 20f);
         seq.Append(rb2d.DOMove(move * speed, 2.0f));
 
         Vector3 dir =  transform.position - move;
@@ -59,6 +69,8 @@ public class PlayerMovement : MonoBehaviour {
     public void Death()
     {
         gameObject.SetActive(false);
+        ShotButton.interactable = false;
+        SoundController.Instance.PlaySE(PlayerSE, 3, false);
         effectController.CreateObj(transform.position, Quaternion.identity);
         //ゲームオーバー画面表示
         scoreController.GameOverObj.gameObject.SetActive(true);

@@ -46,7 +46,7 @@ public class ObjectPool
             poolList.Add(poolObj);
         }
 
-        Debug.Log(poolList.Count + "個生成しました");
+        //Debug.Log(poolList.Count + "個生成しました");
     }
 
     /// <summary>

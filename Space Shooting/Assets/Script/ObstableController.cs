@@ -13,10 +13,15 @@ public class ObstableController : MonoBehaviour {
     [Header("振り幅ありかどうか")]
     public bool IsSwingWidth = false;
 
-    private void Start()
+    void OnEnable()
     {
         poolController.AttachPoint = transform;
         InvokeRepeating("Create", 1, maxCreateTime);
+    }
+
+    void OnDisable()
+    {
+        CancelInvoke("Create");
     }
 
     public void Create()
