@@ -36,16 +36,21 @@ public class PlayerStatus : SingletonMonoBehaviour<PlayerStatus> {
 
     public void ChangeScene(int num)
     {
-        SceneManager.LoadScene(num);
-        Init();
+        //シーン番号が０以上でないと返す
+        if (num < 0) return;
         GameController.Instance.InitGameStateProperty();
+        SceneManager.LoadScene(num);
+        SoundController.Instance.SceneNum = 1;
+        SoundController.Instance.ChangeSetting();
     }
 
-    public void ChangeScene()
+    public void InitScene()
     {
-        SceneManager.LoadScene(1);
         GameController.Instance.InitGameStateProperty();
-        
+        Init();
+        SceneManager.LoadScene(0);
+        SoundController.Instance.SceneNum = 0;
+        SoundController.Instance.Init();
     }
 
     /// <summary>
@@ -53,7 +58,7 @@ public class PlayerStatus : SingletonMonoBehaviour<PlayerStatus> {
     /// </summary>
     public void Init()
     {
-        PlayerHp = new ReactiveProperty<float>(10.0f);
+        PlayerHp = new ReactiveProperty<float>(10);
         Score = new ReactiveProperty<int>(0);
     }
 

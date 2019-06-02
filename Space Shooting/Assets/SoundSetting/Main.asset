@@ -11,12 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3fe57d31a9d5d748a8164d0fcda8bd6, type: 3}
   m_Name: Main
   m_EditorClassIdentifier: 
-  BGM: 0.7
+  BGM: 0.6
   SE: 1
   Mute: 0
   Loop: 1
   bgm_AudioClip:
   - {fileID: 8300000, guid: 9ef035208b9dbb045966c56c95582378, type: 3}
+  - {fileID: 8300000, guid: 1b8286ab54259a7459068bd0aa603c79, type: 3}
   - {fileID: 8300000, guid: 8641dcdf6e5d8f74fac88a114396f868, type: 3}
   - {fileID: 8300000, guid: b9bc347570403f346917a08adb0dc955, type: 3}
   - {fileID: 8300000, guid: 9e2a2de7a9b56c54b922d19beb62dd54, type: 3}

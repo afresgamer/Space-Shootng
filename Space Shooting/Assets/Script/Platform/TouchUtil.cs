@@ -65,13 +65,15 @@ public class TouchUtil : MonoBehaviour {
     public static bool IsGetTouch()
     {
         //UI選択中か判定
-#if UNITY_ANDROID
-        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) { return true; }
+        if(Application.platform == RuntimePlatform.Android)
+        {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) { return true; }
+        }
+        else
+        {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) { return true; }
+        }
         return false;
-#elif UNITY_EDITOR
-        if(UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()){ return true; }
-        return false;
-#endif
     }
 }
 

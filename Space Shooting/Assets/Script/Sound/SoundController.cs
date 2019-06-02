@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class SoundController : SingletonMonoBehaviour<SoundController> {
@@ -15,20 +14,27 @@ public class SoundController : SingletonMonoBehaviour<SoundController> {
     private int sceneNum = 0;
     public int SceneNum {
         get { return sceneNum; }
-        set { sceneNum = SceneManager.GetActiveScene().buildIndex; }
+        set { sceneNum = value; }
     }
 
     public void Init()
     {
         //BGMの設定
-        
         BGM = GetComponent<AudioSource>();
         BGM.clip = SoundSetting.bgm_AudioClip[0];
         BGM.volume = SoundSetting.BGM;
         BGM.mute = SoundSetting.Mute;
         BGM.loop = SoundSetting.Loop;
         seq = DOTween.Sequence();
-    } 
+    }
+
+    public void ChangeSetting()
+    {
+        BGM.clip = SoundSetting.bgm_AudioClip[0];
+        BGM.volume = SoundSetting.BGM;
+        BGM.mute = SoundSetting.Mute;
+        BGM.loop = SoundSetting.Loop;
+    }
     
     void Start()
     {
@@ -73,13 +79,11 @@ public class SoundController : SingletonMonoBehaviour<SoundController> {
         }
     }
 
-    public void PlaySE(AudioSource se, int index, bool isLoop)
+    public void PlaySE(AudioSource se, int index)
     {
         if (!SoundSetting.Mute)
         {
-            se.loop = isLoop;
             if (se.isPlaying) se.Stop();
-            if (se.loop) { se.Play(); }
             else { se.PlayOneShot(SoundSetting.se_AudioClip[index]); }
         }
     }

@@ -8,6 +8,11 @@ public class RankingUtil : SingletonMonoBehaviour<RankingUtil> {
     [HideInInspector]
     public List<ScoreRanking> rankingList = new List<ScoreRanking>();
 
+    /// <summary>
+    /// ランキング記録更新
+    /// </summary>
+    /// <param name="userName">ユーザー名</param>
+    /// <param name="score">スコア</param>
     public void SaveRanking(string userName, int score)
     {
         NCMBObject ncmbObj = new NCMBObject("ScoreRanking");
@@ -29,6 +34,11 @@ public class RankingUtil : SingletonMonoBehaviour<RankingUtil> {
         });
     }
 
+    /// <summary>
+    /// 存在するユーザー名から記録更新
+    /// </summary>
+    /// <param name="userName">ユーザー名</param>
+    /// <param name="score">スコア</param>
     public void FetchRanking(string userName, int score)
     {
         NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("ScoreRanking");
@@ -37,8 +47,7 @@ public class RankingUtil : SingletonMonoBehaviour<RankingUtil> {
         {
             if(e != null)//検索失敗時の処理
             {
-                //新規登録する
-                SaveRanking(userName, score);
+                Debug.LogError(userName + "という名前は存在しません。" + e.ErrorMessage);
             }
             else
             {
@@ -50,7 +59,7 @@ public class RankingUtil : SingletonMonoBehaviour<RankingUtil> {
                         objList[0]["Score"] = score;
                         objList[0].SaveAsync();
                     }
-                }else if(objList.Count <= 0)
+                }else if(objList.Count <= 0)//ユーザー名が存在しない時
                 {
                     objList[0]["Name"] = userName;
                     objList[0]["Score"] = score;
@@ -60,10 +69,12 @@ public class RankingUtil : SingletonMonoBehaviour<RankingUtil> {
         });
     }
 
-    // サーバーからトップ5を取得 ---------------    
+    /// <summary>
+    ///　ランキングボード用取得関数
+    /// </summary>    
     public void FetchTopRankers()
     {
-        // データストアの「HighScore」クラスから検索
+        // データストアの「ScoreRanking」クラスから検索
         NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("ScoreRanking");
         query.OrderByDescending("Score");
         query.Limit = 5;
@@ -72,7 +83,7 @@ public class RankingUtil : SingletonMonoBehaviour<RankingUtil> {
             if (e != null)
             {
                 //検索失敗時の処理
-                Debug.LogWarning("ランキング取得失敗しました。" + e.ErrorMessage);
+                Debug.LogError("ランキング取得失敗しました。" + e.ErrorMessage);
             }
             else
             {
@@ -81,14 +92,13 @@ public class RankingUtil : SingletonMonoBehaviour<RankingUtil> {
                 // 取得したレコードをScoreRankingクラスとして保存
                 foreach (NCMBObject obj in objList)
                 {
-                    int s = System.Convert.ToInt32(obj["Score"]);
                     string n = System.Convert.ToString(obj["Name"]);
+                    int s = System.Convert.ToInt32(obj["Score"]);              
                     list.Add(new ScoreRanking(n,s));
                 }
                 rankingList = list;
             }
         });
     }
-
-
+    
 }

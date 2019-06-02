@@ -20,8 +20,8 @@ public class TitleController : MonoBehaviour {
         enemyController.gameObject.SetActive(false);
         ShotButton.interactable = false;
         Title.DOColor(Color.red, 2.0f).SetLoops(-1, LoopType.Yoyo);
-        MaskEffect.rectTransform.DOAnchorPosX(180, 1.5f).SetLoops(-1);
-        Title.rectTransform.DOScale(1.2f, 1.5f);
+        MaskEffect.rectTransform.DOAnchorPosX(270, 1.5f).SetLoops(-1,LoopType.Restart);
+        Title.rectTransform.DOScale(1.2f, 1.5f).SetLoops(-1,LoopType.Yoyo);
     }
 
     public void SetGameStart()

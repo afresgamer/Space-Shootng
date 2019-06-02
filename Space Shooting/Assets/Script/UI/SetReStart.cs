@@ -11,16 +11,16 @@ public class SetReStart : MonoBehaviour {
         ReStartButton = GetComponent<Button>();
         if (isInit)
         {
-            ReStartButton.onClick.AddListener(() => PlayerStatus.Instance.ChangeScene(0));
+            ReStartButton.onClick.AddListener(() => PlayerStatus.Instance.InitScene());
         }
         else
         {
-            ReStartButton.onClick.AddListener(() => PlayerStatus.Instance.ChangeScene());
+            ReStartButton.onClick.AddListener(() => PlayerStatus.Instance.ChangeScene(1));
         }
 	}
 
-    public void SetSE()
+    public void SetSE(AudioSource audioSource)
     {
-        SoundController.Instance.PlaySE(GetComponent<AudioSource>(), 0, false);
+        SoundController.Instance.PlaySE(audioSource, 0);
     }
 }

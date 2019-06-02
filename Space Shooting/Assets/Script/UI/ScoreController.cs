@@ -14,7 +14,6 @@ public class ScoreController : MonoBehaviour {
     public Image GameOverObj;
     [SerializeField, Header("ステージ数")]
     private Text StageText;
-    
 
     private void Start()
     {
@@ -23,7 +22,6 @@ public class ScoreController : MonoBehaviour {
         GameController.Instance.InitGameStateProperty();
         SoundController.Instance.Init();
         SoundController.Instance.PlayBGM();
-
         GameOverObj.gameObject.SetActive(false);
 
         //各種パラメータ更新処理
@@ -52,10 +50,10 @@ public class ScoreController : MonoBehaviour {
     {
         StageText.rectTransform.DOAnchorPosY(0, 1.0f);
         yield return new WaitForSeconds(2.0f);
-        StageText.rectTransform.DOAnchorPosY(-450, 1.0f);
+        StageText.rectTransform.DOAnchorPosY(-850, 1.0f);
         yield return new WaitForSeconds(1.0f);
         StageText.gameObject.SetActive(false);
-        StageText.rectTransform.DOAnchorPosY(450, 1.0f);
+        StageText.rectTransform.DOAnchorPosY(850, 1.0f);
         yield return new WaitForSeconds(2.0f);
         StageText.gameObject.SetActive(true);
     }

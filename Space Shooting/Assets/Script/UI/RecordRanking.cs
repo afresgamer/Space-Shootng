@@ -9,6 +9,8 @@ public class RecordRanking : MonoBehaviour {
     public Text ScoreText;
     [Header("記録更新ウィンドウ表示ボタン")]
     public Button Recordbutton;
+    [Header("記録更新ウィンドウ移動ボタン")]
+    public Button RecordObj;
 
     void Start () {
         //現在の得点を記録表示
@@ -20,11 +22,11 @@ public class RecordRanking : MonoBehaviour {
 	
     public void Record()
     {
-        if(NameInputField.text != null)
+        if (NameInputField.text != null)
         {
-            RankingUtil.Instance.FetchRanking(NameInputField.text, PlayerStatus.Instance.Score.Value);
+            RankingUtil.Instance.SaveRanking(NameInputField.text, PlayerStatus.Instance.Score.Value);
             Recordbutton.interactable = false;
+            RecordObj.interactable = false;
         }
     }
-
 }

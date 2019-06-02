@@ -9,7 +9,7 @@ public class ExplosionController : MonoBehaviour {
     void Start () {
         explosion = GetComponent<ParticleSystem>();
         ExplosionSE = GetComponent<AudioSource>();
-        SoundController.Instance.PlaySE(ExplosionSE, 3, false);
+        SoundController.Instance.PlaySE(ExplosionSE, 3);
         isPlay = true;
     }
 
@@ -17,7 +17,7 @@ public class ExplosionController : MonoBehaviour {
     {
         if (isPlay)
         {
-            SoundController.Instance.PlaySE(ExplosionSE, 3, false);
+            SoundController.Instance.PlaySE(ExplosionSE, 3);
             isPlay = false;
         }
     }

@@ -30,7 +30,7 @@ public class BossEnemy : EnemyBase {
             GameClearImage.rectTransform.DOAnchorPosY(0, 1.0f);
             gameObject.SetActive(false);
             ShotButton.interactable = false;
-            SoundController.Instance.FadePlayBGM(0.5f, 3);
+            SoundController.Instance.FadePlayBGM(0.5f, 4);
             //全発射するオブジェクトを停止する
             foreach(var ObstableCon in FindObjectsOfType<ObstableController>())
             {

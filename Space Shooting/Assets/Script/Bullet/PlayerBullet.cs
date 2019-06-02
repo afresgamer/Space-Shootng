@@ -11,7 +11,9 @@ public class PlayerBullet : BulletBase {
 
     public override void Update()
     {
-        if (transform.position.y > Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).y)
+        if (transform.position.y > Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).y
+            || transform.position.x > Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).x
+            || transform.position.x < Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).x)
         {
             gameObject.SetActive(false);
         }
